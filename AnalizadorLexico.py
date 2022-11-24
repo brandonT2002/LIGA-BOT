@@ -16,3 +16,8 @@ class AnalizadorLexico:
     def agregarToken(self,tipo,token):
         self.tokens.append(Token(tipo,token,self.linea,self.columna))
         self.i -= 1
+
+    def verErrores(self):
+        print('/nERRORES')
+        for i in self.errores:
+            print(i.caracter,i.linea,i.columna)
