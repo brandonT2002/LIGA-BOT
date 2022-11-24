@@ -18,6 +18,11 @@ class AnalizadorLexico:
         self.i -= 1
 
     def verErrores(self):
-        print('/nERRORES')
+        print('\nERRORES')
         for i in self.errores:
             print(i.caracter,i.linea,i.columna)
+
+    def verTokens(self):
+        print('\nTOKENS')
+        for i in self.tokens:
+            print(i.buffer,i.tipo,i.linea,i.columna)
