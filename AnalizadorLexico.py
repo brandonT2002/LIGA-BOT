@@ -13,3 +13,6 @@ class AnalizadorLexico:
     def agregarError(self,caracter):
         self.errores.append(Error(f'Caracter sin reconocer: {caracter}',self.linea,self.columna))
         
+    def agregarToken(self,tipo,token):
+        self.tokens.append(Token(tipo,token,self.linea,self.columna))
+        self.i -= 1
