@@ -1,5 +1,6 @@
 from Token import Token
 from Error import Error
+from prettytable import PrettyTable
 
 class AnalizadorLexico:
     def __init__(self):
@@ -19,13 +20,19 @@ class AnalizadorLexico:
 
     def verErrores(self):
         print('\nERRORES')
-        for i in self.errores:
-            print(i.caracter,i.linea,i.columna)
+        x = PrettyTable()
+        x.field_names = ['Descripcion','Linea','Columna']
+        for error in self.errores:
+            x.add_row([error.caracter,error.linea,error.columna])
+        print(x)
 
     def verTokens(self):
         print('\nTOKENS')
+        x = PrettyTable()
+        x.field_names = ['Token','Tipo','Linea','Columna']
         for i in self.tokens:
-            print(i.buffer,i.tipo,i.linea,i.columna)
+            x.add_row([i.buffer,i.tipo,i.linea,i.columna])
+        print(x)
 
     def s0(self,caracter):
         if caracter.isalpha():
@@ -107,3 +114,8 @@ class AnalizadorLexico:
             self.estado = 6
             self.columna += 1
             self.buffer += caracter
+
+    def s6(self):
+        self.agregarToken('temporada',self.buffer)
+        self.buffer = ''
+        self.estado = 0
