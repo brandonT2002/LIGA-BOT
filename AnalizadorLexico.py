@@ -26,3 +26,37 @@ class AnalizadorLexico:
         print('\nTOKENS')
         for i in self.tokens:
             print(i.buffer,i.tipo,i.linea,i.columna)
+
+    def s0(self,caracter):
+        if caracter.isalpha():
+            self.estado = 1
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == '<':
+            self.estado = 2
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == '-':
+            self.estado = 7
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter.isdigit():
+            self.estado == 13
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == ' ':
+            self.columna += 1
+        elif caracter == '[':
+            self.columna += 1
+        elif caracter == ']':
+            self.columna += 1
+        elif caracter == '\n':
+            self.linea += 1
+            self.columna += 1
+        elif caracter  == '#':
+            pass
+        else:
+            self.agregarError(caracter)
+            self.estado = 0
+            self.columna += 1
+            self.buffer += ''
