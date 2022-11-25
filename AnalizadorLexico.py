@@ -119,3 +119,17 @@ class AnalizadorLexico:
         self.agregarToken('temporada',self.buffer)
         self.buffer = ''
         self.estado = 0
+
+    def s7(self,caracter):
+        if caracter == 'f':
+            self.estado = 8
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == 'j':
+            self.estado = 9
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == 'n':
+            self.estado = 12
+            self.columna += 1
+            self.buffer += caracter
