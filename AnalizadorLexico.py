@@ -91,3 +91,9 @@ class AnalizadorLexico:
             self.estado = 4
             self.columna += 1
             self.buffer += caracter
+
+    def s4(self,caracter):
+        if caracter.isalpha():
+            self.estado = 5
+            self.columna
+            self.buffer += caracter
