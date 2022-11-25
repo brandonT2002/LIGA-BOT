@@ -60,3 +60,18 @@ class AnalizadorLexico:
             self.estado = 0
             self.columna += 1
             self.buffer += ''
+
+    def s1(self,caracter):
+        if caracter.isalpha():
+            self.estado = 1
+            self.columna += 1
+            self.buffer += caracter
+        else:
+            if self.buffer in ['RESULTADO','VS','TEMPORADA','JORNADA','LOCAL','VISITANTE','TOTAL']:
+                self.agregarToken(f'pr-{self.buffer}',self.buffer)
+                self.buffer = ''
+                self.estado = 0
+            else:
+                self.agregarError(self.buffer)
+                self.buffer += ''
+                self.estado = 0
