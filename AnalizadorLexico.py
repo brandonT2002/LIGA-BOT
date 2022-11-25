@@ -81,6 +81,12 @@ class AnalizadorLexico:
             self.estado = 3
             self.columna += 1
             self.buffer += caracter
+
+    def s3(self,caracter):
+        if caracter.isalpha():
+            self.estado = 3
+            self.columna += 1
+            self.buffer += caracter
         elif caracter == '-':
             self.estado = 4
             self.columna += 1
