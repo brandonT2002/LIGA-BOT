@@ -77,13 +77,13 @@ class AnalizadorLexico:
                 self.estado = 0
 
     def s2(self,caracter):
-        if caracter.isalpha():
+        if caracter.isdigit():
             self.estado = 3
             self.columna += 1
             self.buffer += caracter
 
     def s3(self,caracter):
-        if caracter.isalpha():
+        if caracter.isdigit():
             self.estado = 3
             self.columna += 1
             self.buffer += caracter
@@ -93,7 +93,17 @@ class AnalizadorLexico:
             self.buffer += caracter
 
     def s4(self,caracter):
-        if caracter.isalpha():
+        if caracter.isdigit():
             self.estado = 5
-            self.columna
+            self.columna += 1
+            self.buffer += caracter
+
+    def s5(self,caracter):
+        if caracter.isdigit():
+            self.estado = 5
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == '>':
+            self.estado = 6
+            self.columna += 1
             self.buffer += caracter
