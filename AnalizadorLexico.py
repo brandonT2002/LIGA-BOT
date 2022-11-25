@@ -138,3 +138,13 @@ class AnalizadorLexico:
         self.agregarToken(f'bd_{self.buffer}',self.buffer)
         self.buffer = ''
         self.estado = 0
+
+    def s9(self,caracter):
+        if caracter == 'i':
+            self.estado = 10
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == 'f':
+            self.estado = 11
+            self.columna += 1
+            self.buffer += caracter
