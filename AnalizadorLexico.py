@@ -75,3 +75,13 @@ class AnalizadorLexico:
                 self.agregarError(self.buffer)
                 self.buffer += ''
                 self.estado = 0
+
+    def s2(self,caracter):
+        if caracter.isalpha():
+            self.estado = 3
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == '-':
+            self.estado = 4
+            self.columna += 1
+            self.buffer += caracter
