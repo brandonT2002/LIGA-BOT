@@ -75,7 +75,7 @@ class AnalizadorLexico:
             self.buffer += caracter
         else:
             if self.buffer in ['RESULTADO','VS','TEMPORADA','JORNADA','LOCAL','VISITANTE','TOTAL']:
-                self.agregarToken(f'pr-{self.buffer}',self.buffer)
+                self.agregarToken(f'pr_{self.buffer}',self.buffer)
                 self.buffer = ''
                 self.estado = 0
             else:
@@ -133,3 +133,8 @@ class AnalizadorLexico:
             self.estado = 12
             self.columna += 1
             self.buffer += caracter
+    
+    def s8(self):
+        self.agregarToken(f'bd_{self.buffer}',self.buffer)
+        self.buffer = ''
+        self.estado = 0
