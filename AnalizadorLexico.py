@@ -163,3 +163,13 @@ class AnalizadorLexico:
         self.agregarToken(f'bd_{self.buffer}',self.buffer)
         self.buffer = ''
         self.estado = 0
+
+    def s13(self,caracter):
+        if caracter.isdigit():
+            self.estado = 13
+            self.columna += 1
+            self.buffer += caracter
+        else:
+            self.agregarToken('numero',self.buffer)
+            self.buffer = ''
+            self.estado = 0
