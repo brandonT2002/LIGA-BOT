@@ -158,3 +158,8 @@ class AnalizadorLexico:
         self.agregarToken(f'bd_{self.buffer}',self.buffer)
         self.buffer = ''
         self.estado = 0
+
+    def s12(self):
+        self.agregarToken(f'bd_{self.buffer}',self.buffer)
+        self.buffer = ''
+        self.estado = 0
