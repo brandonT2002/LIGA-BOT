@@ -52,7 +52,7 @@ class AnalizadorLexico:
             self.columna += 1
             self.buffer += caracter
         elif caracter.isdigit():
-            self.estado == 16
+            self.estado = 16
             self.columna += 1
             self.buffer += caracter
         elif caracter in [' ']:
@@ -137,9 +137,13 @@ class AnalizadorLexico:
             self.estado = 12
             self.columna += 1
             self.buffer += caracter
+        else:
+            self.agregarToken('guion',self.buffer)
+            self.buffer = ''
+            self.estado = 0
     
     def s8(self):
-        self.agregarToken(f'bd_{self.buffer}',self.buffer)
+        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
         self.buffer = ''
         self.estado = 0
 
@@ -154,22 +158,22 @@ class AnalizadorLexico:
             self.buffer += caracter
 
     def s10(self):
-        self.agregarToken(f'bd_{self.buffer}',self.buffer)
+        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
         self.buffer = ''
         self.estado = 0
 
     def s11(self):
-        self.agregarToken(f'bd_{self.buffer}',self.buffer)
+        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
         self.buffer = ''
         self.estado = 0
 
     def s12(self):
-        self.agregarToken(f'bd_{self.buffer}',self.buffer)
+        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
         self.buffer = ''
         self.estado = 0
 
     def s13(self,caracter):
-        if caracter.isalpha():
+        if caracter.isalpha() or caracter == ' ':
             self.estado = 14
             self.columna += 1
             self.buffer += caracter
@@ -179,7 +183,7 @@ class AnalizadorLexico:
             self.buffer += caracter
 
     def s14(self,caracter):
-        if caracter.isalpha():
+        if caracter.isalpha() or caracter == ' ':
             self.estado = 14
             self.columna += 1
             self.buffer += caracter
@@ -189,13 +193,13 @@ class AnalizadorLexico:
             self.buffer += caracter
 
     def s15(self):
-        self.agregarToken('equipo',{self.buffer})
-        self.buffer += ''
+        self.agregarToken('equipo',self.buffer)
+        self.buffer = ''
         self.estado = 0
 
     def s16(self,caracter):
         if caracter.isdigit():
-            self.estado = 13
+            self.estado = 16
             self.columna += 1
             self.buffer += caracter
         else:
@@ -234,6 +238,12 @@ class AnalizadorLexico:
                 self.s11()
             elif self.estado == 12:
                 self.s12()
+            elif self.estado == 13:
+                self.s13(cadena[self.i])
+            elif self.estado == 14:
+                self.s14(cadena[self.i])
+            elif self.estado == 15:
+                self.s15()
             elif self.estado == 16:
                 self.s16(cadena[self.i])
             self.i += 1
