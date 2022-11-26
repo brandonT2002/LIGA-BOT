@@ -74,7 +74,7 @@ class AnalizadorLexico:
             self.columna += 1
             self.buffer += caracter
         else:
-            if self.buffer in ['RESULTADO','VS','TEMPORADA','JORNADA','LOCAL','VISITANTE','TOTAL']:
+            if self.buffer in ['RESULTADO','VS','TEMPORADA','JORNADA','LOCAL','VISITANTE','TOTAL','GOLES','TABLA','PARTIDOS','TOP','SUPERIOR','INFERIOR']:
                 self.agregarToken(f'pr_{self.buffer}',self.buffer)
                 self.buffer = ''
                 self.estado = 0
