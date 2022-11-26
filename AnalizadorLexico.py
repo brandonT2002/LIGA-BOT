@@ -178,6 +178,16 @@ class AnalizadorLexico:
             self.columna += 1
             self.buffer += caracter
 
+    def s14(self,caracter):
+        if caracter.isalpha():
+            self.estado = 14
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == '"':
+            self.estado = 15
+            self.columna += 1
+            self.buffer += caracter
+
     def s16(self,caracter):
         if caracter.isdigit():
             self.estado = 13
