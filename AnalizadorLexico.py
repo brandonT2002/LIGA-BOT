@@ -47,11 +47,15 @@ class AnalizadorLexico:
             self.estado = 7
             self.columna += 1
             self.buffer += caracter
-        elif caracter.isdigit():
-            self.estado == 13
+        elif caracter == '"':
+            self.estado = 13
             self.columna += 1
             self.buffer += caracter
-        elif caracter == ' ':
+        elif caracter.isdigit():
+            self.estado == 16
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter in [' ']:
             self.columna += 1
         elif caracter == '[':
             self.columna += 1
@@ -165,6 +169,14 @@ class AnalizadorLexico:
         self.estado = 0
 
     def s13(self,caracter):
+        if caracter.isalpha():
+            self.estado = 14
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == '"':
+            self.estado = 15
+
+    def s16(self,caracter):
         if caracter.isdigit():
             self.estado = 13
             self.columna += 1
@@ -205,6 +217,6 @@ class AnalizadorLexico:
                 self.s11()
             elif self.estado == 12:
                 self.s12()
-            elif self.estado == 13:
-                self.s13(cadena[self.i])
+            elif self.estado == 16:
+                self.s16(cadena[self.i])
             self.i += 1

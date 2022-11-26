@@ -1,5 +1,5 @@
 from AnalizadorLexico import AnalizadorLexico
 lexico = AnalizadorLexico()
-lexico.analizar('TOP INFERIOR TEMPORADA <1999-2000> -n 3')
+lexico.analizar('PARTIDOS “Real Madrid” TEMPORADA <1999-2000> -ji 1 -jf 18')
 lexico.verTokens()
 lexico.verErrores()
