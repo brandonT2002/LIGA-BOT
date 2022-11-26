@@ -175,6 +175,8 @@ class AnalizadorLexico:
             self.buffer += caracter
         elif caracter == '"':
             self.estado = 15
+            self.columna += 1
+            self.buffer += caracter
 
     def s16(self,caracter):
         if caracter.isdigit():
