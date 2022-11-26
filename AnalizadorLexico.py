@@ -173,3 +173,38 @@ class AnalizadorLexico:
             self.agregarToken('numero',self.buffer)
             self.buffer = ''
             self.estado = 0
+
+    def analizar(self,cadena):
+        print('Analizando...')
+        cadena += '#'
+        self.i = 0
+        while(self.i < len(cadena)):
+            if self.estado == 0:
+                self.s0(cadena[self.i])
+            elif self.estado == 1:
+                self.s1(cadena[self.i])
+            elif self.estado == 2:
+                self.s2(cadena[self.i])
+            elif self.estado == 3:
+                self.s3(cadena[self.i])
+            elif self.estado == 4:
+                self.s4(cadena[self.i])
+            elif self.estado == 5:
+                self.s5(cadena[self.i])
+            elif self.estado == 6:
+                self.s6()
+            elif self.estado == 7:
+                self.s7(cadena[self.i])
+            elif self.estado == 8:
+                self.s8()
+            elif self.estado == 9:
+                self.s9(cadena[self.i])
+            elif self.estado == 10:
+                self.s10()
+            elif self.estado == 11:
+                self.s11()
+            elif self.estado == 12:
+                self.s12()
+            elif self.estado == 13:
+                self.s13(cadena[self.i])
+            self.i += 1
