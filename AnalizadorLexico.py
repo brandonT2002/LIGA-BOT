@@ -188,6 +188,11 @@ class AnalizadorLexico:
             self.columna += 1
             self.buffer += caracter
 
+    def s15(self):
+        self.agregarToken('equipo',{self.buffer})
+        self.buffer += ''
+        self.estado = 0
+
     def s16(self,caracter):
         if caracter.isdigit():
             self.estado = 13
