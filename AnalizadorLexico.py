@@ -43,28 +43,29 @@ class AnalizadorLexico:
             self.estado = 2
             self.columna += 1
             self.buffer += caracter
+        elif caracter == '>':
+            self.estado = 3
+            self.columna += 1
+            self.buffer += caracter
         elif caracter == '-':
-            self.estado = 7
+            self.estado = 4
             self.columna += 1
             self.buffer += caracter
         elif caracter == '"':
-            self.estado = 13
+            self.estado = 10
             self.columna += 1
             self.buffer += caracter
         elif caracter.isdigit():
-            self.estado = 16
+            print('entra1')
+            self.estado = 13
             self.columna += 1
             self.buffer += caracter
         elif caracter in [' ']:
             self.columna += 1
-        elif caracter == '[':
-            self.columna += 1
-        elif caracter == ']':
-            self.columna += 1
         elif caracter == '\n':
             self.linea += 1
             self.columna += 1
-        elif caracter  == '#':
+        elif caracter == '#':
             pass
         else:
             self.agregarError(caracter)
@@ -73,133 +74,106 @@ class AnalizadorLexico:
             self.buffer += ''
 
     def s1(self,caracter):
-        if caracter.isalpha():
-            self.estado = 1
+        if caracter.isalpha() or caracter.isdigit():
+            self.estado == 1
             self.columna += 1
             self.buffer += caracter
         else:
             if self.buffer in ['RESULTADO','VS','TEMPORADA','JORNADA','LOCAL','VISITANTE','TOTAL','GOLES','TABLA','PARTIDOS','TOP','SUPERIOR','INFERIOR']:
-                self.agregarToken(f'pr_{self.buffer}',self.buffer)
+                self.agregarToken(f'PR_{self.buffer}',self.buffer)
                 self.buffer = ''
                 self.estado = 0
             else:
-                self.agregarError(self.buffer)
-                self.buffer += ''
+                self.agregarToken('cadena',self.buffer)
+                self.buffer = ''
                 self.estado = 0
 
-    def s2(self,caracter):
-        if caracter.isdigit():
-            self.estado = 3
-            self.columna += 1
-            self.buffer += caracter
-
-    def s3(self,caracter):
-        if caracter.isdigit():
-            self.estado = 3
-            self.columna += 1
-            self.buffer += caracter
-        elif caracter == '-':
-            self.estado = 4
-            self.columna += 1
-            self.buffer += caracter
-
-    def s4(self,caracter):
-        if caracter.isdigit():
-            self.estado = 5
-            self.columna += 1
-            self.buffer += caracter
-
-    def s5(self,caracter):
-        if caracter.isdigit():
-            self.estado = 5
-            self.columna += 1
-            self.buffer += caracter
-        elif caracter == '>':
-            self.estado = 6
-            self.columna += 1
-            self.buffer += caracter
-
-    def s6(self):
-        self.agregarToken('temporada',self.buffer)
+    def s2(self):
+        self.agregarToken('menor_que',self.buffer)
         self.buffer = ''
         self.estado = 0
 
-    def s7(self,caracter):
+    def s3(self):
+        self.agregarToken('mayor_que',self.buffer)
+        self.buffer = ''
+        self.estado = 0
+
+    def s4(self,caracter):
         if caracter == 'f':
-            self.estado = 8
+            self.estado = 5
             self.columna += 1
             self.buffer += caracter
         elif caracter == 'j':
-            self.estado = 9
+            self.estado = 6
             self.columna += 1
             self.buffer += caracter
         elif caracter == 'n':
-            self.estado = 12
+            self.estado = 9
             self.columna += 1
             self.buffer += caracter
         else:
             self.agregarToken('guion',self.buffer)
             self.buffer = ''
             self.estado = 0
-    
+
+    def s5(self):
+        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
+        self.buffer = ''
+        self.estado = 0
+        
+    def s6(self,caracter):
+        if caracter == 'i':
+            self.estado = 7
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == 'f':
+            self.estado = 8
+            self.columna += 1
+            self.buffer += caracter
+
+    def s7(self):
+        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
+        self.buffer = ''
+        self.estado = 0
+
     def s8(self):
         self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
         self.buffer = ''
         self.estado = 0
 
-    def s9(self,caracter):
-        if caracter == 'i':
-            self.estado = 10
-            self.columna += 1
-            self.buffer += caracter
-        elif caracter == 'f':
+    def s9(self):
+        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
+        self.buffer = ''
+        self.estado = 0
+
+    def s10(self,caracter):
+        if caracter.isalpha() or caracter == ' ':
             self.estado = 11
             self.columna += 1
             self.buffer += caracter
+        elif caracter == '"':
+            self.estado = 12
+            self.columna += 1
+            self.buffer += caracter
 
-    def s10(self):
-        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
-        self.buffer = ''
-        self.estado = 0
-
-    def s11(self):
-        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
-        self.buffer = ''
-        self.estado = 0
+    def s11(self,caracter):
+        if caracter.isalpha() or caracter == ' ':
+            self.estado = 11
+            self.columna += 1
+            self.buffer += caracter
+        elif caracter == '"':
+            self.estado = 12
+            self.columna += 1
+            self.buffer += caracter
 
     def s12(self):
-        self.agregarToken(f'bd_{self.buffer}'.replace('-',''),self.buffer)
-        self.buffer = ''
-        self.estado = 0
-
-    def s13(self,caracter):
-        if caracter.isalpha() or caracter == ' ':
-            self.estado = 14
-            self.columna += 1
-            self.buffer += caracter
-        elif caracter == '"':
-            self.estado = 15
-            self.columna += 1
-            self.buffer += caracter
-
-    def s14(self,caracter):
-        if caracter.isalpha() or caracter == ' ':
-            self.estado = 14
-            self.columna += 1
-            self.buffer += caracter
-        elif caracter == '"':
-            self.estado = 15
-            self.columna += 1
-            self.buffer += caracter
-
-    def s15(self):
         self.agregarToken('equipo',self.buffer)
         self.buffer = ''
         self.estado = 0
 
-    def s16(self,caracter):
+    def s13(self,caracter):
         if caracter.isdigit():
-            self.estado = 16
+            self.estado = 13
             self.columna += 1
             self.buffer += caracter
         else:
@@ -217,33 +191,27 @@ class AnalizadorLexico:
             elif self.estado == 1:
                 self.s1(cadena[self.i])
             elif self.estado == 2:
-                self.s2(cadena[self.i])
+                self.s2()
             elif self.estado == 3:
-                self.s3(cadena[self.i])
+                self.s3()
             elif self.estado == 4:
                 self.s4(cadena[self.i])
             elif self.estado == 5:
-                self.s5(cadena[self.i])
+                self.s5()
             elif self.estado == 6:
-                self.s6()
+                self.s6(cadena[self.i])
             elif self.estado == 7:
-                self.s7(cadena[self.i])
+                self.s7()
             elif self.estado == 8:
                 self.s8()
             elif self.estado == 9:
-                self.s9(cadena[self.i])
+                self.s9()
             elif self.estado == 10:
-                self.s10()
+                self.s10(cadena[self.i])
             elif self.estado == 11:
-                self.s11()
+                self.s11(cadena[self.i])
             elif self.estado == 12:
                 self.s12()
             elif self.estado == 13:
                 self.s13(cadena[self.i])
-            elif self.estado == 14:
-                self.s14(cadena[self.i])
-            elif self.estado == 15:
-                self.s15()
-            elif self.estado == 16:
-                self.s16(cadena[self.i])
             self.i += 1
